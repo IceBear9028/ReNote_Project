@@ -6,10 +6,10 @@ import './style/login.css';
 // 도움받은 사이트
 // https://yangbari.tistory.com/28
 
-const LoginPageLayout = () => {
+const Login = () => {
     return(
         <>
-            <div className='loginContainer'>
+            <div className='login'>
                 <h1 className = "loginTitle">로그인화면</h1>
                 <h1>안녕하세요</h1>
                 <form>
@@ -22,4 +22,29 @@ const LoginPageLayout = () => {
     )
 }
 
-export {LoginPageLayout}
+const LoginFail = () => {
+    return(
+        <>
+            <div className = "loginFail">
+                <div>
+                    <h1>입력하신정보를 찾을 수 없습니다.</h1> 
+                    <form>
+                        <input className = "backTpLogin" type = "submit"></input> 
+                    </form>
+                </div>
+            </div>
+        </>
+    )
+}
+
+
+const LoginPageLayout = () => {
+    return(
+        <>
+            <div className = "LoginContainer">             
+            </div> 
+        </>
+    )
+}
+
+export {LoginPageLayout, Login, LoginFail}
