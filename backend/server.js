@@ -1,27 +1,26 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 
 const config = require('./config/key');
 const {User} = require('./models/User');
 const port = 6003;
 
-// 몽고DB 연결 코드
-// 몽고 DB 유저 id : lsy875
-// 비번 : tlatms9028
-// 1000, 2000 포트는 이미 사용중임.
-const mongoose = require('mongoose');
 mongoose.connect(config.mongoURI,{
 }).then(() => {
     console.log('connect mongoDB')
 }).catch((error)=>{console.log(error)})
 
+
 // bodyparser 모듈 적용
 // 클라이언트에서 받은 정보들을 분석해서 사용할 수 있게 해줌
 // urlencoded -> url을 갖고오게 함 
 // json -> json 데이터를 갖고오게 함
-app.use(bodyParser.urlencoded({extended : true}))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 app.get('/', (req, res) => {
@@ -39,11 +38,43 @@ app.post('/register', (req,res) => {
     user.save((err,userInfo) => {
         // 갖고오는데 에러가 생기면 클라이언트에 다음과 같은 json 데이터를 보낸다.
         if (err){
-            console.log(userInfo)
-            console.log(user)
-            return res.json({ sucess : false })}
-        console.log(user)
+            return res.json({ sucess : false })
+        }
+        console.log(user);
         return res.status(200).json({ sucess : true })
+    })
+})
+
+// 로그인 기능
+app.post('/login', (req, res) => {
+    // 요청한 정보를 db에서 뒤져본다.
+    User.findOne({email : req.body.email},(err, userInfo) => {
+        if(!userInfo){
+            res.json({
+                loginSucess : false,
+                message : "죄송합니다. 해당하는 id 가 존재하지 않습니다."
+            })
+        }else{
+            // 해당 아이디의 비밀번호도 맞는지 확인
+            if(userInfo.password === req.body.password){
+                userInfo.generateToken((err, userInfo) => {
+                    if(err){
+                        res.status(400).send(err)
+                    }else{
+                        res.cookie("x_auth", userInfo.token).status(200).json({
+                            loginSucess : true,
+                            userId : userInfo._id
+                        })
+                    }
+                })
+            }else{
+                console.log(req.body)
+                res.json({
+                    loginSucess : false,
+                    message : "비밀번호 틀림"
+                })
+            }
+        }
     })
 })
 
