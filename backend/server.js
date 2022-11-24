@@ -1,16 +1,17 @@
 const express = require('express');
 const app = express();
-const port = 6003;
 const bodyParser = require('body-parser');
+
+const config = require('./config/key');
 const {User} = require('./models/User');
+const port = 6003;
 
 // 몽고DB 연결 코드
 // 몽고 DB 유저 id : lsy875
 // 비번 : tlatms9028
 // 1000, 2000 포트는 이미 사용중임.
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://userRegister:12345@renotedb.xfnopip.mongodb.net/?retryWrites=true&w=majority',{
-    // useUnifiedTopology : true, useCreateIndex : true, useFindAndModuify : true
+mongoose.connect(config.mongoURI,{
 }).then(() => {
     console.log('connect mongoDB')
 }).catch((error)=>{console.log(error)})
@@ -33,16 +34,15 @@ app.post('/register', (req,res) => {
     // req 에는 프론트앤드에서 받아온 데이터가 담김
     // -> 필요한 body 데이터를 받게 해주는 것이 bodyParser 덕분
     const user = new User(req.body)
-
     // 받아온 데이터를 유저 모델에 저장한다.
-    user.save((err,doc) => {
+    // -> db에 user 라는 컬렉션이 생성된다.
+    user.save((err,userInfo) => {
         // 갖고오는데 에러가 생기면 클라이언트에 다음과 같은 json 데이터를 보낸다.
         if (err){
-            console.log(doc)
-            console.log(err)
+            console.log(userInfo)
+            console.log(user)
             return res.json({ sucess : false })}
-        // if (req.body.id === null){
-        //     return res.json({ sucess : false })}
+        console.log(user)
         return res.status(200).json({ sucess : true })
     })
 })
