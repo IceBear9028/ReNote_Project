@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const config = require('./config/key');
 const {User} = require('./models/User');
+const {auth} = require('./middleware/auth');
 const port = 6003;
 
 mongoose.connect(config.mongoURI,{
@@ -29,7 +30,7 @@ app.get('/', (req, res) => {
 
 // 회원가입시 필요한 정보들을 프론트엔드에서 갖고오면
 // 해당 데이터를 데이터베이스에 저장
-app.post('/register', (req,res) => {
+app.post('/api/users/register', (req,res) => {
     // req 에는 프론트앤드에서 받아온 데이터가 담김
     // -> 필요한 body 데이터를 받게 해주는 것이 bodyParser 덕분
     const user = new User(req.body)
@@ -46,7 +47,7 @@ app.post('/register', (req,res) => {
 })
 
 // 로그인 기능
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
     // 요청한 정보를 db에서 뒤져본다.
     User.findOne({email : req.body.email},(err, userInfo) => {
         if(!userInfo){
@@ -77,6 +78,11 @@ app.post('/login', (req, res) => {
         }
     })
 })
+
+app.get('get/users/auth', auth, (req,res) => {
+
+})
+
 
 
 app.listen(port, () => {
