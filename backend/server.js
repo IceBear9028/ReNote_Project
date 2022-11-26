@@ -51,7 +51,7 @@ app.post('/api/users/login', (req, res) => {
     // 요청한 정보를 db에서 뒤져본다.
     User.findOne({email : req.body.email},(err, userInfo) => {
         if(!userInfo){
-            res.json({
+            return res.json({
                 loginSucess : false,
                 message : "죄송합니다. 해당하는 id 가 존재하지 않습니다."
             })
@@ -60,9 +60,9 @@ app.post('/api/users/login', (req, res) => {
             if(userInfo.password === req.body.password){
                 userInfo.generateToken((err, userInfo) => {
                     if(err){
-                        res.status(400).send(err)
+                        return res.status(400).send(err)
                     }else{
-                        res.cookie("x_auth", userInfo.token).status(200).json({
+                        return res.cookie("x_auth", userInfo.token).status(200).json({
                             loginSucess : true,
                             userId : userInfo._id
                         })
@@ -70,7 +70,7 @@ app.post('/api/users/login', (req, res) => {
                 })
             }else{
                 console.log(req.body)
-                res.json({
+                return res.json({
                     loginSucess : false,
                     message : "비밀번호 틀림"
                 })
@@ -79,11 +79,28 @@ app.post('/api/users/login', (req, res) => {
     })
 })
 
-app.get('get/users/auth', auth, (req,res) => {
-
+// 로그인되어있는 동안 토큰의 인증절차를 확인한다.
+app.get('/api/users/auth', auth, (req,res) => {
+    res.status(200).json({
+        _id : req.user._id,
+        isAdmin : req.user.role === 0 ? false : true,
+        isAuth : true,
+        email : req.user.email,
+        name : req.user.name,
+        role : req.user.role
+    })
 })
 
-
+// 로그아웃 기능
+app.get('/api/users/logout', auth, (req,res) => {
+    User.findOneAndUpdate({_id : req.user._id}, {token : ""}, (err, userInfo) => {
+        if(err){
+            return res.status(400).json({ success : false, err })
+        }else{
+            return res.status(200).json({ success : true })
+        }
+    })
+})
 
 app.listen(port, () => {
     console.log(`app listening on port : ${port}`);

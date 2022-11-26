@@ -13,6 +13,7 @@ let auth = (req, res, next) => {
         }else{
             req.token = token;
             req.user = userInfo;
+            // 모든 인증과정을 거쳤으면, 다음 기능이 실행되게 해준다.
             next();
         }
     })

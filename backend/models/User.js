@@ -32,6 +32,7 @@ const userSchema = Schema({
     }
 });
 
+// 처음 회원가입 했을 때, 토큰을 부여하는 함수
 userSchema.methods.generateToken = function(callback){
     // 1. 이 메소드가 실행되는 순간, 이 메소드가 담긴 오브젝트 전체가 userInfo 라는 이름으로 바인딩 된다.
     const userInfo = this;
@@ -52,12 +53,11 @@ userSchema.methods.generateToken = function(callback){
     })
 };
 
+// 클라이언트에서 받은 토큰과 db에서 받은 토큰이 일치하는지 확인하는 함수
 userSchema.statics.findByToken = function(token, callback){
-    var userInfo = this;
-
-    // 클라이언트에서 받은 토큰과 db에서 받은 토큰이 일치하는지 확인하는 함수
+    var usermodel = this;
     jwt.verify(token, 'secretToken',   function(err, decoded){
-        userInfo.findOne({"_id" : decoded, "token" : token}, function(err, userInfo){
+        usermodel.findOne({"_id" : decoded, "token" : token}, function(err, userInfo){
             if(err){
                 callback(err);
             }else{
