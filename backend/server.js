@@ -28,6 +28,11 @@ app.get('/', (req, res) => {
     res.send('hello 는 시발')
 })
 
+app.get('/api/test', (req, res) => {
+    res.send('안녕?')
+})
+
+
 // 회원가입시 필요한 정보들을 프론트엔드에서 갖고오면
 // 해당 데이터를 데이터베이스에 저장
 app.post('/api/users/register', (req,res) => {

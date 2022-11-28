@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import styled from "styled-components";
-import './style/login.css';
+import './Login.css';
 
 // 도움받은 사이트
 // https://yangbari.tistory.com/28

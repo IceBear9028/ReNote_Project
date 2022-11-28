@@ -1,13 +1,19 @@
 import './App.css';
-import {LoginPageLayout} from './page/login'
+import {Login} from './components/page/LoginPage/Login'
+import {BrowserRouter ,Routes, Route} from "react-router-dom";
+import {Landing} from "./components/page/LandingPage/Landing";
 
 function App() {
   return (
     <>
-      <h1>안녕하세요</h1>
-      <div className="App">
-        <LoginPageLayout></LoginPageLayout>
-      </div>
+        <BrowserRouter>
+            <div className="App">
+                <Routes>
+                    <Route path = "/login" element={<Login/>}/>
+                    <Route path = "/api/test" element={<Landing/>}/>
+                </Routes>
+            </div>
+        </BrowserRouter>
     </>
   );
 }
