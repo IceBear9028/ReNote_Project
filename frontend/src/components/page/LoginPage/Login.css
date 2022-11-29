@@ -1,0 +1,13 @@
+.login{
+    display : flex;
+    padding : 70px;
+    flex-direction: column;
+    border : 1px solid #dfdfdf;
+    border-radius: 20px;
+}
+
+.loginForm{
+    display : flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}

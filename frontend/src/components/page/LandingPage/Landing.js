@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const Landing = () => {
     useEffect(()=> {
-        axios.get('http://localhost:6003/api/test')
+        axios.get('/api/test')
             .then((response) => {console.log(response)})
     },[])
     return(

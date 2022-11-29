@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
     res.send('hello 는 시발')
 })
 
