@@ -18,6 +18,9 @@ const Register = () => {
     const onPasswordConHandler = (event) => {setPasswordCon(event.currentTarget.value);};
     const onNameHandler = (event) => {setName(event.currentTarget.value);};
 
+    const onBackLoginHandler = (event) => {
+        navigate('/login');
+    }
 
     const onSubmitHandler = (event) => {
         //preventDefault() 를 하지 않으면, 버튼을 누르면 새로고침되면서 State에 저장한 데이터들도 증발함
@@ -34,14 +37,12 @@ const Register = () => {
             name : name,
         }
 
-        console.log(body);
-
         dispatch(registerUser(body))
             .then(response => {
-                if(response.payload.sucess){
+                if(response.payload.success){
                     navigate('/login');
                 } else {
-                    alert('Error');
+                    alert(response.payload.text);
                 }
             })
 
@@ -58,6 +59,7 @@ const Register = () => {
                     비밀번호 확인 : <input className = "inputPwdCon" type = "password" onChange={onPasswordConHandler}/>
                     <input className = "inputSubmit" type = "submit" value = "회원가입"/>
                 </form>
+                <button className = "backToLoginButton" onClick={onBackLoginHandler}>로그인화면으로 이동</button>
             </div>
         </>
     )

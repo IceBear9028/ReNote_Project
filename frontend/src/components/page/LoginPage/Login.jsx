@@ -18,6 +18,10 @@ const Login = () => {
     const onEmailHandler = (event) => {setEmail(event.currentTarget.value);};
     const onPasswordHandler = (event) => {setPassword(event.currentTarget.value);};
 
+    const onRegisterHandler = (event) => {
+        // 회원가입페이지로 이동
+        navigate('/register');
+    }
     const onSubmitHandler = (event) => {
         //preventDefault() 를 하지 않으면, 버튼을 누르면 새로고침되면서 State에 저장한 데이터들도 증발함
         event.preventDefault();
@@ -27,14 +31,14 @@ const Login = () => {
             password : password,
         }
 
-        console.log(body);
-
         dispatch(loginUser(body))
             .then(response => {
-                if(response.payload.loginSucess){
-                    navigate('/');
+                if(response.payload.loginSuccess){
+                    navigate('/main');
                 } else {
-                    alert('Error');
+                    if(response.payload.message){
+                        alert(response.payload.message);
+                    }
                 }
             })
 
@@ -48,7 +52,8 @@ const Login = () => {
                     아이디 : <input className = "inputId" type = "email" onChange={onEmailHandler}/>
                     비밀번호 : <input className = "inputPwd" type = "password" onChange={onPasswordHandler}/>
                     <input className = "inputSubmit" type = "submit" value = "로그인"/>
-                </form>      
+                </form>
+                <button className = 'registerButton' onClick={onRegisterHandler}>회원가입</button>
             </div>
         </>
     )

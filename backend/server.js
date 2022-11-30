@@ -46,12 +46,13 @@ app.post('/api/users/register', (req,res) => {
         if (err){
             console.log(err)
             return res.json({
-                sucess : false ,
+                success : false ,
                 error : err,
+                text : "이미 가입한 아이디입니다."
             })
         }
         console.log(user);
-        return res.status(200).json({ sucess : true })
+        return res.status(200).json({ success : true })
     })
 })
 
@@ -61,7 +62,7 @@ app.post('/api/users/login', (req, res) => {
     User.findOne({email : req.body.email},(err, userInfo) => {
         if(!userInfo){
             return res.json({
-                loginSucess : false,
+                loginSuccess : false,
                 message : "죄송합니다. 해당하는 id 가 존재하지 않습니다."
             })
         }else{
@@ -72,7 +73,7 @@ app.post('/api/users/login', (req, res) => {
                         return res.status(400).send(err)
                     }else{
                         return res.cookie("x_auth", userInfo.token).status(200).json({
-                            loginSucess : true,
+                            loginSuccess : true,
                             userId : userInfo._id
                         })
                     }
@@ -80,8 +81,8 @@ app.post('/api/users/login', (req, res) => {
             }else{
                 console.log(req.body)
                 return res.json({
-                    loginSucess : false,
-                    message : "비밀번호 틀림"
+                    loginSuccess : false,
+                    message : "해당 id의 비밀번호가 틀립니다."
                 })
             }
         }
@@ -89,6 +90,7 @@ app.post('/api/users/login', (req, res) => {
 })
 
 // 로그인되어있는 동안 토큰의 인증절차를 확인한다.
+// 클라이언트받은 쿠키를 통해서 로그인 상태를 확인
 app.get('/api/users/auth', auth, (req,res) => {
     res.status(200).json({
         _id : req.user._id,
