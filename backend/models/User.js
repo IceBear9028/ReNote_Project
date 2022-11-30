@@ -9,10 +9,6 @@ const userSchema = Schema({
         type : String,
         required : true,
     },
-    age : {
-        type : String,
-        required : true
-    },
     email : {
         type : String,
         trim : true,

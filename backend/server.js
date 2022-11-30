@@ -44,7 +44,11 @@ app.post('/api/users/register', (req,res) => {
     user.save((err,userInfo) => {
         // 갖고오는데 에러가 생기면 클라이언트에 다음과 같은 json 데이터를 보낸다.
         if (err){
-            return res.json({ sucess : false })
+            console.log(err)
+            return res.json({
+                sucess : false ,
+                error : err,
+            })
         }
         console.log(user);
         return res.status(200).json({ sucess : true })
@@ -100,7 +104,7 @@ app.get('/api/users/auth', auth, (req,res) => {
 app.get('/api/users/logout', auth, (req,res) => {
     User.findOneAndUpdate({_id : req.user._id}, {token : ""}, (err, userInfo) => {
         if(err){
-            return res.status(400).json({ success : false, err })
+            return res.status(400).json({ success : false, error : err })
         }else{
             return res.status(200).json({ success : true })
         }

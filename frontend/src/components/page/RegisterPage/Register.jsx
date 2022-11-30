@@ -38,7 +38,7 @@ const Register = () => {
 
         dispatch(registerUser(body))
             .then(response => {
-                if(response.payload.register){
+                if(response.payload.sucess){
                     navigate('/login');
                 } else {
                     alert('Error');
