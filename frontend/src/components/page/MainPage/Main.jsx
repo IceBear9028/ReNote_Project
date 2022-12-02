@@ -2,6 +2,7 @@ import React from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {CalendarCom} from "../CalendarPage/calendar";
+import './Main.css';
 
 const Main = () => {
     const navigate = useNavigate();
@@ -15,16 +16,29 @@ const Main = () => {
                 }
             })
     }
+    const onAddMemoHandler = () => {
+
+    }
 
     return(
         <>
             <div className = "main">
-                <h1>Main Page</h1>
-                <button onClick={onClickHandler}>로그아웃</button>
-                <div className = "calendarWrap">
-                    <CalendarCom/>
+                <div className = "menuBar">
+                    <h1>Main Page</h1>
+                    <button onClick={onClickHandler}>로그아웃</button>
                 </div>
-                <div className= "memoWrap">
+                <div className = "contentWrap">
+                    <div className = "calendarWrap">
+                        <div className = "calendar">
+                            <CalendarCom/>
+                        </div>
+                        <div className="dateListWrap">
+                            <button className="addMemo" onClick={onAddMemoHandler}>일정추가</button>
+                        </div>
+                    </div>
+                    <div className= "memoWrap">
+
+                    </div>
 
                 </div>
             </div>
