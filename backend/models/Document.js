@@ -6,18 +6,18 @@ const jwt = require('jsonwebtoken');
 const childSchema = Schema({
     title : {
         type : String,
-        required : true,
     },
     creationDate : {
         type : Date,
     },
     calendarDate : {
         type : Date,
-        required: true,
+    },
+    editDate : {
+        type : Date
     },
     text : {
         type : String,
-        required : true,
     }
 });
 

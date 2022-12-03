@@ -142,7 +142,8 @@ app.post('/api/document/createDocument', (req, res) => {
                 if(err){
                     return res.json({
                         success : false,
-                        text : '예상치 못한 문제로 저장이 되지 않았습니다. 다시 저장버튼을 눌러주세요'
+                        text : '예상치 못한 문제로 저장이 되지 않았습니다. 다시 저장버튼을 눌러주세요',
+                        error : err
                     })
                 }else{
                     return res.json({
@@ -151,11 +152,27 @@ app.post('/api/document/createDocument', (req, res) => {
                     })
                 }
             })
-            // 2. 자식 도큐먼트가 불러지고
         }
     })
 })
 
+// documentbox 안의 도큐먼트들 다 갖고 오기
+app.get('/api/document/findDocumentAll', (req, res) => {
+    DocumentBox.findOne({user_id : req.body.user_id}, (err, docBoxInfo) => {
+        if(err){
+            return res.json({
+                success : false,
+                error : err,
+                text : '예상치 못한 오류가 발생하였습니다.'
+            })
+        }else{
+            return res.json({
+                success : true,
+                docs : docBoxInfo.documents
+            })
+        }
+    })
+})
 
 app.listen(port, () => {
     console.log(`app listening on port : ${port}`);
