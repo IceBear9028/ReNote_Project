@@ -63,7 +63,7 @@ userSchema.statics.findByToken = function(token, callback){
     })
 }
 
-
+// 스키마를 인스턴스화 하는 것
 const User = mongoose.model('User', userSchema);
 
 module.exports = {User}

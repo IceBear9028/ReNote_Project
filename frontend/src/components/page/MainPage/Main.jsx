@@ -32,12 +32,11 @@ const Main = () => {
                         <div className = "calendar">
                             <CalendarCom/>
                         </div>
+                    </div>
+                    <div className= "memoWrap">
                         <div className="dateListWrap">
                             <button className="addMemo" onClick={onAddMemoHandler}>일정추가</button>
                         </div>
-                    </div>
-                    <div className= "memoWrap">
-
                     </div>
 
                 </div>
