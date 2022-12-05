@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 const config = require('./config/key');
 const {User} = require('./models/User');
-const {DocumentBox, Document} = require('./models/Document')
+const {DocumentBox, Document} = require('./models/Document');
 
 const {auth} = require('./middleware/auth');
 const port = 6003;
@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.get('/api/test', (req, res) => {
-    res.send('안녕?')
+    res.send('안녕?');
 })
 
 // 회원가입시 필요한 정보들을 프론트엔드에서 갖고오면
@@ -173,6 +173,13 @@ app.get('/api/document/findDocumentAll', (req, res) => {
         }
     })
 })
+
+// 선택한 일정을 수정
+
+
+// 선택한 일정을 삭제
+
+
 
 app.listen(port, () => {
     console.log(`app listening on port : ${port}`);
