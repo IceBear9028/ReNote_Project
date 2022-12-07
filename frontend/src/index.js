@@ -8,10 +8,14 @@ import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 import { applyMiddleware, createStore } from 'redux';
 import Reducer from './redux/_reducers'
+import Modal from 'react-modal';
+
 
 // import { createStore } from 'redux'
 // import user from ''
 // import { Provider } from 'react-redux';
+
+Modal.setAppElement('#root');
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore)
 
