@@ -10,11 +10,14 @@ const childSchema = Schema({
     creationDate : {
         type : Date,
     },
-    calendarDate : {
+    editDate : {
         type : Date,
     },
-    editDate : {
-        type : Date
+    dateStart : {
+        type : Date,
+    },
+    dateEnd : {
+        type : Date,
     },
     text : {
         type : String,

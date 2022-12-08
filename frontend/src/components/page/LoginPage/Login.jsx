@@ -59,29 +59,4 @@ const Login = () => {
     )
 }
 
-const LoginFail = () => {
-    return(
-        <>
-            <div className = "loginFail">
-                <div>
-                    <h1>입력하신정보를 찾을 수 없습니다.</h1> 
-                    <form>
-                        <input className = "backTpLogin" type = "submit"></input> 
-                    </form>
-                </div>
-            </div>
-        </>
-    )
-}
-
-
-const LoginPageLayout = () => {
-    return(
-        <>
-            <div className = "LoginContainer">             
-            </div> 
-        </>
-    )
-}
-
-export {LoginPageLayout, Login, LoginFail}
+export {Login}
