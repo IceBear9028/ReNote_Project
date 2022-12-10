@@ -157,7 +157,7 @@ app.post('/api/document/createDocument', (req, res) => {
 })
 
 // documentbox 안의 도큐먼트들 다 갖고 오기
-app.get('/api/document/findDocumentAll', (req, res) => {
+app.post('/api/document/findDocumentAll', (req, res) => {
     DocumentBox.findOne({user_id : req.body.user_id}, (err, docBoxInfo) => {
         if(err){
             return res.json({
