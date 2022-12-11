@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 const config = require('./config/key');
@@ -124,31 +125,41 @@ app.get('/api/users/logout', auth, (req,res) => {
 
 //새로운 유저도큐멘트 생성
 app.post('/api/document/createDocument', (req, res) => {
-    DocumentBox.findOne({user_id : req.body.user_id}, (err, docBox) => {
+    let token = req.cookies.x_auth;
+    jwt.verify(token, 'secretToken', function(err, decoded){
         if(err){
-            return res.json('예상치 못한 문제가 발생하였습니다.');
+           return res.json({
+               success : false,
+               text : "서버에 예상치 못한 문제가 발생하였습니다."
+           })
         }else{
-            // 에러 없이 도큐멘트들이 생성
-            // 1. 부모도큐먼트가 불러지고 자식 도큐먼트가 들어가는 경우
-            docBox.documents.push(new Document(req.body, (err, documentInfo) => {
+            DocumentBox.findOne({user_id : decoded}, (err, docBox) => {
                 if(err){
-                    return res.json({
-                        success : false,
-                        text : '죄송합니다. 추후에 다시 일정을 추가해주세요'
-                    });
-                }
-            }));
-            docBox.save((err, docBoxInfo) => {
-                if(err){
-                    return res.json({
-                        success : false,
-                        text : '예상치 못한 문제로 저장이 되지 않았습니다. 다시 저장버튼을 눌러주세요',
-                        error : err
-                    })
+                    return res.json('예상치 못한 문제가 발생하였습니다.');
                 }else{
-                    return res.json({
-                        success : true,
-                        text : '일정이 정상적으로 저장되었습니다.'
+                    // 에러 없이 도큐멘트들이 생성
+                    // 1. 부모도큐먼트가 불러지고 자식 도큐먼트가 들어가는 경우
+                    docBox.documents.push(new Document(req.body, (err, documentInfo) => {
+                        if(err){
+                            return res.json({
+                                success : false,
+                                text : '죄송합니다. 추후에 다시 일정을 추가해주세요'
+                            });
+                        }
+                    }));
+                    docBox.save((err, docBoxInfo) => {
+                        if(err){
+                            return res.json({
+                                success : false,
+                                text : '예상치 못한 문제로 저장이 되지 않았습니다. 다시 저장버튼을 눌러주세요',
+                                error : err
+                            })
+                        }else{
+                            return res.json({
+                                success : true,
+                                text : '일정이 정상적으로 저장되었습니다.'
+                            })
+                        }
                     })
                 }
             })
@@ -157,27 +168,34 @@ app.post('/api/document/createDocument', (req, res) => {
 })
 
 // documentbox 안의 도큐먼트들 다 갖고 오기
-app.post('/api/document/findDocumentAll', (req, res) => {
-    DocumentBox.findOne({user_id : req.body.user_id}, (err, docBoxInfo) => {
-        if(err){
-            return res.json({
-                success : false,
-                error : err,
-                text : '예상치 못한 오류가 발생하였습니다.'
+app.get('/api/document/findDocumentAll', (req, res) => {
+    let token = req.cookies.x_auth;
+    console.log(token);
+    jwt.verify(token, 'secretToken', function(err, decoded){
+        if(!err){
+            DocumentBox.findOne({user_id : decoded}, (err, docBoxInfo) => {
+                if(err){
+                    return res.json({
+                        success : false,
+                        error : err,
+                        text : '예상치 못한 오류가 발생하였습니다.'
+                    })
+                }else{
+                    return res.json({
+                        success : true,
+                        docs : docBoxInfo.documents
+                    })
+                }
             })
         }else{
             return res.json({
-                success : true,
-                docs : docBoxInfo.documents
+                success : false,
+                text : "서버에 문제가 발생하였습니다."
             })
         }
     })
 })
 
-// 선택한 일정을 수정
-
-
-// 선택한 일정을 삭제
 
 
 

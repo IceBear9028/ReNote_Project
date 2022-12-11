@@ -31,18 +31,25 @@ const Main = () => {
 
     // 모든 일정을 보여주는 기능 관련 코드
     const dispatch = useDispatch();
-    const user_id = useSelector(state => state.user.userData._id);
-    const body = {
-        "user_id" : user_id
-    }
-    // 처음 페이지 랜더링시 한번만 실행
+    const schedule = '';
     useEffect(() => {
-        dispatch(allSchedule(body)).then((res) => {
+        dispatch(allSchedule()).then((res) => {
             if(!res.payload.success){
-                alert('일정을 불러오는데 예상치 못한 오류가 발생하였습니다.');
+                alert('예상치 못한 문제가 발생하였습니다. 다시 로그인해주세요(front).');
+            }else{
+                const schedule = res.payload.showSchedules.docs;
+
             }
         })
-    },[])
+    }, [])
+
+    ////////////////// 구현중
+    const showCalendar = async() => {
+        const schedule = await useSelector(state => state.content.showSchedules.docs);
+
+    }
+    ////////////////// 구현중
+    // const schedules = useSelector((state) => state.content.showSchedules.docs);
 
     return(
         <>
@@ -62,7 +69,11 @@ const Main = () => {
                             <button className="addSchedule" onClick={onAddScheduleHandler}>일정추가</button>
                             <CreateSchedule onSchedule = {onSchedule} setOnSchedule={setOnSchedule}/>
                             <div className = "calendar">
-
+                                {schedules.map((item, index) => {
+                                    return(
+                                        <CalendarElement item = {item} key = {index} />
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>

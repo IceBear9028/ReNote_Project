@@ -13,7 +13,7 @@ const CreateSchedule = ({onSchedule, setOnSchedule}) => {
     const [text, setText] = useState('');
 
     // 도큐먼트 id 가 필요
-    const user_id = useSelector(state => state.user.userData._id);
+    // const user_id = useSelector(state => state.user.userData._id);
     // body 에 들어가는 data 변수화
     const onTitleHandle = (event) => {setTitle(event.currentTarget.value);};
     const onTextHandle = (event) => {setText(event.currentTarget.value)};
@@ -24,14 +24,12 @@ const CreateSchedule = ({onSchedule, setOnSchedule}) => {
     }
     const onSubmitHandle = () => {
         let body = {
-            user_id : user_id,
             title : title,
             creationDate : createDate,
             dateStart : dateStart,
             dateEnd : dateEnd,
             text : text
         }
-        console.log(user_id);
         axios.post('/api/document/createDocument', body)
             .then((res) => {
                 if(res.data.success){
@@ -40,7 +38,6 @@ const CreateSchedule = ({onSchedule, setOnSchedule}) => {
                     alert("저장하는데 예상치 못한 오류가 발생하였습니다.");
                 }
             }).then(onCancelHandler);
-
     }
 
     return(
