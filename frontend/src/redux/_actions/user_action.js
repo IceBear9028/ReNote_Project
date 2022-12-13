@@ -26,7 +26,6 @@ export const registerUser = (DataSubmit) => {
 export const authUser = () => {
     const request = axios.get('/api/users/auth')
         .then((res) => res.data);
-
     console.log(request);
     return{
         type : AUTH_USER,

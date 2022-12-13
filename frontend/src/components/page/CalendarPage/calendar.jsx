@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {CalendarList} from "./calendarList";
 import Calendar from 'react-calendar';
 
 const CalendarCom = () => {
@@ -10,7 +11,9 @@ const CalendarCom = () => {
             <p className='text-center'>
                 <span className='bold'>Selected Date:</span>{' '}
                 {date.toDateString()}
+                {date.toString()}
             </p>
+            <CalendarList date = {date}/>
         </div>
     )
 }

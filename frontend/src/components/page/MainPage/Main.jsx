@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { useNavigate} from 'react-router-dom';
 import { CalendarCom } from "../CalendarPage/calendar";
 import { CreateSchedule } from "../../modals/Schedule/createSchedule";
-import {CalendarElement} from "../../features/calendarElement";
+import {ScheduleElement} from "../../features/ScheduleElement";
 import {allSchedule} from "../../../redux/_actions/content_action";
 import './Main.css';
 
@@ -31,25 +31,13 @@ const Main = () => {
 
     // 모든 일정을 보여주는 기능 관련 코드
     const dispatch = useDispatch();
-    const schedule = '';
+    const [scheduleData, setScheduleData] = useState('');
+
     useEffect(() => {
         dispatch(allSchedule()).then((res) => {
-            if(!res.payload.success){
-                alert('예상치 못한 문제가 발생하였습니다. 다시 로그인해주세요(front).');
-            }else{
-                const schedule = res.payload.showSchedules.docs;
-
-            }
+            setScheduleData(res.payload);
         })
     }, [])
-
-    ////////////////// 구현중
-    const showCalendar = async() => {
-        const schedule = await useSelector(state => state.content.showSchedules.docs);
-
-    }
-    ////////////////// 구현중
-    // const schedules = useSelector((state) => state.content.showSchedules.docs);
 
     return(
         <>
@@ -69,10 +57,8 @@ const Main = () => {
                             <button className="addSchedule" onClick={onAddScheduleHandler}>일정추가</button>
                             <CreateSchedule onSchedule = {onSchedule} setOnSchedule={setOnSchedule}/>
                             <div className = "calendar">
-                                {schedules.map((item, index) => {
-                                    return(
-                                        <CalendarElement item = {item} key = {index} />
-                                    )
+                                {scheduleData && scheduleData.map((item, index)=>{
+                                    return <ScheduleElement text={item.text} title = {item.title} creationDate={item.creationDate}/>
                                 })}
                             </div>
                         </div>

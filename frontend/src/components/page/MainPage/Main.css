@@ -28,6 +28,12 @@
     border : 1px solid #dfdfdf;
 }
 
+.calendar{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
 .memoWrap{
     display: flex;
     width : 900px;

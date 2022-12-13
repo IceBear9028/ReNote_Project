@@ -27,13 +27,13 @@ const Text = styled.div`
     font-size: 15px;
 `
 
-const CalendarElement = ({item}) => {
+const ScheduleElement = ({text, title,creationDate }) => {
     const contentText = () => {
         if(!showAll){
-            const textSlice = item.text.substring(0, 10);
+            const textSlice = text.substring(0, 10);
             return textSlice.concat('...');
         }else{
-            return item.text;
+            return text;
         }
     }
     const [showAll, setShowAll] = useState(false);
@@ -45,11 +45,11 @@ const CalendarElement = ({item}) => {
         <>
             <ElementDiv>
                 <TopContainer>
-                    <Title>{item.title}</Title>
+                    <Title>{title}</Title>
                     <button className= "showAll" onClick={onShowContentHandler}>전체보기</button>
                 </TopContainer>
                 <DownContainer>
-                    <Date>{item.creationDate}</Date>
+                    <Date>{creationDate}</Date>
                     <Text>{contentText()}</Text>
                 </DownContainer>
             </ElementDiv>
@@ -57,4 +57,4 @@ const CalendarElement = ({item}) => {
     )
 }
 
-export {CalendarElement}
+export {ScheduleElement}

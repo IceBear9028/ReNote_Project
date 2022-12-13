@@ -2,7 +2,6 @@ import ReactModal from 'react-modal';
 import {useState} from "react";
 import {ScheduleDatePick} from "../../features/datePick";
 import axios from 'axios';
-import { useSelector } from "react-redux";
 
 const CreateSchedule = ({onSchedule, setOnSchedule}) => {
     // body 에 들어갈 data 선언&초기화
@@ -37,7 +36,7 @@ const CreateSchedule = ({onSchedule, setOnSchedule}) => {
                 }else{
                     alert("저장하는데 예상치 못한 오류가 발생하였습니다.");
                 }
-            }).then(onCancelHandler);
+            }).then(onCancelHandler)
     }
 
     return(
