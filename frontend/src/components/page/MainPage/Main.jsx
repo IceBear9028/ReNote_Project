@@ -6,6 +6,7 @@ import { CalendarCom } from "../CalendarPage/calendar";
 import { CreateSchedule } from "../../modals/Schedule/createSchedule";
 import {ScheduleElement} from "../../features/ScheduleElement";
 import {allSchedule} from "../../../redux/_actions/content_action";
+import {Button} from "@mui/material";
 import './Main.css';
 
 
@@ -44,7 +45,7 @@ const Main = () => {
             <div className = "main">
                 <div className = "menuBar">
                     <h1>Main Page</h1>
-                    <button onClick={onClickHandler}>로그아웃</button>
+                    <Button onClick={onClickHandler} size = 'small'>로그아웃</Button>
                 </div>
                 <div className = "contentWrap">
                     <div className = "calendarWrap">
@@ -53,12 +54,14 @@ const Main = () => {
                         </div>
                     </div>
                     <div className= "memoWrap">
-                        <div className="dateListWrap">
-                            <button className="addSchedule" onClick={onAddScheduleHandler}>일정추가</button>
+                        <div className = 'topSection'>
+                            <Button className="addSchedule" onClick={onAddScheduleHandler}>일정추가</Button>
+                        </div>
+                        <div className="midSection">
                             <CreateSchedule onSchedule = {onSchedule} setOnSchedule={setOnSchedule}/>
                             <div className = "calendar">
                                 {scheduleData && scheduleData.map((item, index)=>{
-                                    return <ScheduleElement text={item.text} title = {item.title} creationDate={item.creationDate}/>
+                                    return <ScheduleElement text={item.text} title = {item.title} creationDate={item.creationDate} id = {item._id}/>
                                 })}
                             </div>
                         </div>

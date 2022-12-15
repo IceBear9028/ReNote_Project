@@ -196,7 +196,35 @@ app.get('/api/document/findDocumentAll', (req, res) => {
     })
 })
 
-
+app.post('/api/document/delDocument', (req, res) => {
+    let token = req.cookies.x_auth;
+    console.log(token);
+    jwt.verify( token, 'secretToken', function(err, decoded){
+        if(!err){
+            DocumentBox.updateOne({user_id : decoded}, {$pull:{documents:{ _id :req.body._id}}},(err, docBoxInfo) => {
+                if(err){
+                    return res.json({
+                        success : false,
+                        error : err,
+                        text : '예상치 못한 오류가 발생하였습니다.'
+                    })
+                }else{
+                    return res.json({
+                        success : true,
+                        text : '일정이 정상적으로 삭제되었습니다.'
+                    })
+                }
+            })
+        }else{
+            // 로그인 되어 있지 않은 회원에 일정 삭제를 접근하려는 경우
+            return res.json({
+                success : false,
+                error : err,
+                text : '잘못된 접근입니다.'
+            })
+        }
+    })
+})
 
 
 app.listen(port, () => {

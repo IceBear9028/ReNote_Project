@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import {loginUser} from "../../../redux/_actions/user_action";
 import {useDispatch} from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import {Button, Input, Tab, TextField} from "@mui/material";
+
+
+
 import './Login.css';
 
 // 도움받은 사이트
@@ -47,13 +51,12 @@ const Login = () => {
         <>
             <div className='login'>
                 <h1 className = "loginTitle">로그인화면</h1>
-                <h1>안녕하세요</h1>
-                <form className='loginForm' onSubmit={onSubmitHandler}>
-                    아이디 : <input className = "inputId" type = "email" onChange={onEmailHandler}/>
-                    비밀번호 : <input className = "inputPwd" type = "password" onChange={onPasswordHandler}/>
-                    <input className = "inputSubmit" type = "submit" value = "로그인"/>
+                <form id='loginForm' onSubmit={onSubmitHandler}>
+                    <TextField id = "inputId" type = "email" label = "email" onChange={onEmailHandler} size = "normal" margin = "dense"/>
+                    <TextField id = "inputPwd" type = "password" label = "password" onChange={onPasswordHandler} size = "normal" margin = "dense"/>
                 </form>
-                <button className = 'registerButton' onClick={onRegisterHandler}>회원가입</button>
+                <Button className = "loginSubmit" variant="contained" type = "submit" form = "loginForm" disableElevation >Login</Button>
+                <Button className = "registerbtn" onClick={onRegisterHandler} margin = "dense" >회원가입</Button>
             </div>
         </>
     )

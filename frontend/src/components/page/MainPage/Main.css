@@ -33,10 +33,20 @@
     flex-wrap: wrap;
 }
 
+.topSection{
+    display: flex;
+    flex-direction: column;
+}
 
 .memoWrap{
     display: flex;
+    flex-direction: column;
     width : 900px;
     border-radius: 10px;
     border : 1px solid #dfdfdf;
+}
+
+.midSection{
+    display : flex;
+    margin-top : 20px;
 }

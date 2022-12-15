@@ -37,6 +37,7 @@ const CreateSchedule = ({onSchedule, setOnSchedule}) => {
                     alert("저장하는데 예상치 못한 오류가 발생하였습니다.");
                 }
             }).then(onCancelHandler)
+        window.location.replace("/main");
     }
 
     return(

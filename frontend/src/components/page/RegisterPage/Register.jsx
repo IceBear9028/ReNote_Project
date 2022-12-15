@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {registerUser} from "../../../redux/_actions/user_action";
 import {useDispatch} from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import {Button, TextField} from "@mui/material";
 import './Register.css';
 
 const Register = () => {
@@ -50,16 +51,15 @@ const Register = () => {
     return(
         <>
             <div className='login'>
-                <h1 className = "loginTitle">회원가입화면</h1>
-                <h1>안녕하세요</h1>
-                <form className='loginForm' onSubmit={onSubmitHandler}>
-                    이름 : <input className = "inputName" type = "text" onChange={onNameHandler}/>
-                    아이디 : <input className = "inputId" type = "email" onChange={onEmailHandler}/>
-                    비밀번호 : <input className = "inputPwd" type = "password" onChange={onPasswordHandler}/>
-                    비밀번호 확인 : <input className = "inputPwdCon" type = "password" onChange={onPasswordConHandler}/>
-                    <input className = "inputSubmit" type = "submit" value = "회원가입"/>
+                <h1 className = "loginTitle">회원가입</h1>
+                <form id='loginForm' onSubmit={onSubmitHandler}>
+                    <TextField id = "inputName" type = "text" label = "이름" onChange={onNameHandler} size = "small" margin = "dense"/>
+                    <TextField id = "inputId" type = "email" label = "사용자 email" onChange={onEmailHandler} size = "small" margin = "dense"/>
+                    <TextField id = "inputPwd" type = "password" label = "비밀번호 입력" onChange={onPasswordHandler} size = "small" margin = "dense"/>
+                    <TextField id = "inputPwdCon" type = "password" label = "비밀번호 입력" onChange={onPasswordConHandler} size = "small" margin = "dense"/>
                 </form>
-                <button className = "backToLoginButton" onClick={onBackLoginHandler}>로그인화면으로 이동</button>
+                <Button id = "inputSubmit" variant="contained" type = "submit"  form = "loginForm"  disableElevation>회원가입</Button>
+                <Button id = "backToLoginButton" onClick={onBackLoginHandler}>로그인화면으로 이동</Button>
             </div>
         </>
     )
