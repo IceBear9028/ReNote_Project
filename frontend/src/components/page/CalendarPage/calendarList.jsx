@@ -36,7 +36,6 @@ const CalendarElement = ({data}) => {
     )
 }
 
-
 const CalendarList = ({date}) => {
     const calendarData = useSelector(state => state.content.showSchedules);
     return (

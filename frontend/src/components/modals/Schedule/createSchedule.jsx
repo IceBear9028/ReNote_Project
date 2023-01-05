@@ -43,7 +43,6 @@ const CreateSchedule = ({onSchedule, setOnSchedule}) => {
     return(
         <>
             <ReactModal isOpen = {onSchedule}>
-                <div>시험창입니다.</div>
                 <div className='buttonContainer'>
                     <button onClick={onSubmitHandle}>확인</button>
                     <button onClick={onCancelHandler}>취소</button>
