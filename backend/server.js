@@ -30,6 +30,7 @@ app.get('/api/test', (req, res) => {
     res.send('안녕?');
 })
 
+
 // 회원가입시 필요한 정보들을 프론트엔드에서 갖고오면
 // 해당 데이터를 데이터베이스에 저장
 app.post('/api/users/register', (req,res) => {
@@ -71,6 +72,8 @@ app.post('/api/users/login', (req, res) => {
     // 요청한 정보를 db에서 뒤져본다.
     User.findOne({email : req.body.email},(err, userInfo) => {
         if(!userInfo){
+            console.log(err);
+            console.log(userInfo);
             return res.json({
                 loginSuccess : false,
                 message : "죄송합니다. 해당하는 id 가 존재하지 않습니다."

@@ -15,6 +15,8 @@ const Main = () => {
     const navigate = useNavigate();
     // 모달 창 관련 코드
     const [onSchedule, setOnSchedule ] = useState(false);
+
+    const state = useSelector(state => state.auth_user.user.userData.name);
     const onClickHandler = () => {
         axios.get('/api/users/logout')
             .then((response) => {
@@ -46,6 +48,7 @@ const Main = () => {
                 <div className = "menuBar">
                     <h1>Main Page</h1>
                     <Button onClick={onClickHandler} size = 'small'>로그아웃</Button>
+                    <p>{state}</p>
                 </div>
                 <div className = "contentWrap">
                     <div className = "calendarWrap">

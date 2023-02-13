@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {loginUser} from "../../../redux/_actions/user_action";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import {Button, Input, Tab, TextField} from "@mui/material";
 
@@ -34,6 +34,7 @@ const Login = () => {
             email : email,
             password : password,
         }
+        console.log(body);
 
         dispatch(loginUser(body))
             .then(response => {
